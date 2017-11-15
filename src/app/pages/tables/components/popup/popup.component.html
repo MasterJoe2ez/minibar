@@ -1,0 +1,36 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">{{modalHeader}}</h4>
+    <button class="close" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+      <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="userService.user.$key">
+      <div class="form-group">
+        <label>Pin</label>
+        <input class="form-control" name="pin" #pin="ngModel" [(ngModel)]="userService.user.pin" placeholder="Pin..." required>
+      </div>
+      <div class="form-group">
+        <label>Name</label>
+        <input class="form-control" name="name" #name="ngModel" [(ngModel)]="userService.user.name" placeholder="Name...">
+      </div>
+      <div class="form-group">
+        <label>Tel</label>
+        <input class="form-control" name="tel" #tel="ngModel" [(ngModel)]="userService.user.tel" placeholder="Tel...">
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-default" [disabled]="!userForm.valid">
+          <i class="fa fa-floppy-o"></i> Submit</button>
+        <button type="button" class="btn btn-default" *ngIf="userService.user.$key!=null" (click)="onDelete(userForm)">
+          <i class="fa fa-trash"></i> Delete</button>
+        <button type="button" class="btn btn-default" (click)="resetForm(userForm)">
+          <i class="fa fa-repeat"></i> Reset</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary confirm-btn" (click)="closeModal()">Save changes</button>
+  </div>
+</div>

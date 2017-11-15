@@ -1,0 +1,16 @@
+<ul>
+  <li *ngFor="let item of items | async">
+    <input type="text" #updatetext [value]="item.text" />
+    <input type="text" #updatename [value]="item.name" />
+    <input type="text" #updatetel [value]="item.tel" />
+    <button (click)="updateItem(item.key, updatetext.value)">Update</button>
+    <button (click)="deleteItem(item.key)">Delete</button>
+  </li>
+</ul>
+<form (submit)="addItem()">
+  <input type="text" [(ngModel)]="text" #newtext  />
+  <input type="text" [(ngModel)]="name" #newname  />
+  <input type="text" [(ngModel)]="tel" #newtel  />
+</form>
+<button value="submit">Add</button>
+<button (click)="deleteEverything()">Delete All</button>

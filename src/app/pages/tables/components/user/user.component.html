@@ -1,0 +1,117 @@
+<form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+  <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="userService.user.$key">
+  <div class="form-group">
+    <label>Pin</label>
+    <input class="form-control" name="pin" #pin="ngModel" [(ngModel)]="userService.user.pin" placeholder="Pin..." required>
+  </div>
+  <div class="form-group">
+    <label>Name</label>
+    <input class="form-control" name="name" #name="ngModel" [(ngModel)]="userService.user.name" placeholder="Name...">
+  </div>
+  <div class="form-group">
+    <label>Tel</label>
+    <input class="form-control" name="tel" #tel="ngModel" [(ngModel)]="userService.user.tel" placeholder="Tel...">
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-default" [disabled]="!userForm.valid">
+      <i class="fa fa-floppy-o"></i> Submit</button>
+    <button type="button" class="btn btn-default" *ngIf="userService.user.$key!=null" (click)="onDelete(userForm)">
+      <i class="fa fa-trash"></i> Delete</button>
+    <button type="button" class="btn btn-default" (click)="resetForm(userForm)">
+      <i class="fa fa-repeat"></i> Reset</button>
+  </div>
+</form>
+
+
+
+<div class="widgets">
+  <div class="row">
+    <ba-card title="Basic Example" baCardClass="with-scroll" class="data-table-container">
+      <div class="row">
+        <div class="col-sm-2">
+          <label class="label-control">Rows on page</label>
+          <select class="form-control input-sm" [(ngModel)]="rowsOnPage">
+            <option [ngValue]="5">5</option>
+            <option [ngValue]="10">10</option>
+            <option [ngValue]="15">15</option>
+          </select>
+        </div>
+        <!--<div class="col-sm-4">-->
+          <!--<div class="row">-->
+            <!--<label class="col-sm-12 label-control">Sort by</label>-->
+          <!--</div>-->
+          <!--<div class="row">-->
+            <!--<div class="offset-sm-1 col-sm-5">-->
+              <!--<div class="row">-->
+                <!--<select class="form-control input-sm" [(ngModel)]="sortBy">-->
+                  <!--<option ngValue="name">Name</option>-->
+                  <!--<option ngValue="email">Email</option>-->
+                  <!--<option ngValue="age">Age</option>-->
+                  <!--<option [ngValue]="sortByWordLength">City</option>-->
+                <!--</select>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="offset-sm-1 col-sm-5">-->
+              <!--<div class="row">-->
+                <!--<select class="form-control input-sm" [(ngModel)]="sortOrder">-->
+                  <!--<option ngValue="asc">Ascending</option>-->
+                  <!--<option ngValue="desc">Descending</option>-->
+                  <!--<option ngValue="badValue">Bad value</option>-->
+                <!--</select>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">User information</div>
+
+        <table class="table table-striped" [mfData]=" user " [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+          <thead>
+          <tr>
+            <th style="width: 20%">
+              <mfDefaultSorter by="gg"></mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="pin">PIN</mfDefaultSorter>
+            </th>
+            <th style="width: 40%">
+              <mfDefaultSorter by="name">Name</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="tel">TELEPHONE</mfDefaultSorter>
+            </th>
+            <!--<th style="width: 20%">-->
+              <!--<mfDefaultSorter [by]="sortByWordLength">City</mfDefaultSorter>-->
+            <!--</th>-->
+          </tr>
+          <tr>
+            <th colspan="5">
+              Filter by name:
+              <input class="form-control" [(ngModel)]="filterQuery" />
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let user of users" (click)="onItemClick(user)">
+            <td>
+              <button (click)="editmodel()" class="btn btn-primary">Edit</button>
+              <button (click)="onDelete(userForm)" *ngIf="userService.user.$key!=null" class="btn btn-danger">x</button>
+            </td>
+            <td>{{user.pin}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.tel | uppercase}}</td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr>
+            <td colspan="5">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+    </ba-card>
+  </div>
+</div>
